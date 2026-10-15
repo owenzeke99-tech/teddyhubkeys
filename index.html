@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090611">
+<title>Teddy Hub</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --purple: #a855f7;
+    --light-purple: #d8b4fe;
+    --pink: #e879f9;
+    --bg: #090611;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow: hidden;
+    color: white;
+    background:
+        radial-gradient(ellipse at 50% 10%,
+        #351451 0%, transparent 48%),
+        radial-gradient(ellipse at 10% 90%,
+        #1d1033 0%, transparent 45%),
+        var(--bg);
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+#particles {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    bottom: -20px;
+    border-radius: 50%;
+    background: #c084fc;
+    box-shadow: 0 0 12px #a855f7;
+    animation: rise linear infinite;
+}
+
+@keyframes rise {
+    0% {
+        transform: translate3d(0, 0, 0) scale(.5);
+        opacity: 0;
+    }
+    15% { opacity: .8; }
+    85% { opacity: .5; }
+    100% {
+        transform: translate3d(30px, -110vh, 0) scale(1.2);
+        opacity: 0;
+    }
+}
+
+.wrapper {
+    width: 100%;
+    max-width: 390px;
+    position: relative;
+    z-index: 2;
+    animation: enter .8s cubic-bezier(.2,.8,.2,1) both;
+}
+
+@keyframes enter {
+    from {
+        opacity: 0;
+        transform: translateY(35px) scale(.94);
+        filter: blur(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+.card {
+    position: relative;
+    padding: 30px 23px 23px;
+    overflow: hidden;
+    border-radius: 25px;
+    border: 1px solid rgba(192,132,252,.3);
+    background: linear-gradient(
+        145deg,
+        rgba(27,17,43,.97),
+        rgba(10,8,18,.98)
+    );
+    box-shadow:
+        0 25px 80px #0009,
+        0 0 45px #9333ea16,
+        inset 0 1px 0 #ffffff0d;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    width: 240px;
+    height: 180px;
+    top: -125px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #a855f7;
+    filter: blur(85px);
+    opacity: .3;
+    pointer-events: none;
+}
+
+.card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        #c084fc55,
+        transparent 35%,
+        transparent 65%,
+        #9333ea33
+    );
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.brand {
+    text-align: center;
+    position: relative;
+}
+
+.flame-box {
+    width: 94px;
+    height: 94px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 19px;
+    position: relative;
+    border-radius: 29px;
+    background: linear-gradient(145deg,#291341,#110b1c);
+    border: 1px solid #c084fc50;
+    box-shadow:
+        0 0 30px #a855f72a,
+        inset 0 0 25px #9333ea15;
+    animation: float 3s ease-in-out infinite;
+}
+
+.flame-box::before {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 33px;
+    border: 1px solid #a855f728;
+    animation: pulse 3s ease-in-out infinite;
+}
+
+.flame {
+    width: 58px;
+    height: 68px;
+    filter: drop-shadow(0 0 10px #a855f7aa);
+    animation: fireGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+}
+
+@keyframes pulse {
+    0%,100% { transform: scale(1); opacity: .35; }
+    50% { transform: scale(1.08); opacity: 1; }
+}
+
+@keyframes fireGlow {
+    from { filter: drop-shadow(0 0 5px #a855f7); }
+    to { filter: drop-shadow(0 0 16px #d8b4fe); }
+}
+
+h1 {
+    font-size: clamp(34px, 9vw, 42px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: 1px;
+    background: linear-gradient(
+        100deg,
+        #fff 10%,
+        #e9d5ff 45%,
+        #a855f7 80%,
+        #e879f9
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 200% auto;
+    animation: titleShine 5s linear infinite;
+}
+
+@keyframes titleShine {
+    to { background-position: 200% center; }
+}
+
+.subtitle {
+    margin-top: 10px;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #a69ab9;
+}
+
+.badge {
+    width: fit-content;
+    margin: 22px auto 26px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 14px;
+    border-radius: 30px;
+    border: 1px solid #a855f737;
+    background: #a855f70d;
+    color: #d8b4fe;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.badge-dot {
+    width: 7px;
+    height: 7px;
+    background: #c084fc;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #c084fc;
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+    0%,100% { opacity: 1; }
+    50% { opacity: .3; }
+}
+
+.section-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    color: #c4b5d8;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+}
+
+.secure {
+    color: #a78bfa;
+    font-size: 9px;
+    letter-spacing: .5px;
+}
+
+.key-box {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 15px 13px;
+    min-height: 66px;
+    border-radius: 14px;
+    background: #080610;
+    border: 1px solid #ffffff13;
+    transition: border-color .3s, box-shadow .3s;
+}
+
+.key-box:focus-within,
+.key-box:hover {
+    border-color: #a855f76b;
+    box-shadow: 0 0 22px #9333ea12;
+}
+
+.key-symbol {
+    flex-shrink: 0;
+    width: 35px;
+    height: 35px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    color: #d8b4fe;
+    background: #a855f71c;
+    font-size: 18px;
+}
+
+#key {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    color: #e9d5ff;
+    font-family: Consolas, monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    user-select: all;
+}
+
+.copy-btn {
+    position: relative;
+    width: 100%;
+    min-height: 51px;
+    margin-top: 14px;
+    overflow: hidden;
+    border: 1px solid #ffffff17;
+    border-radius: 13px;
+    color: white;
+    background: linear-gradient(105deg,#7e22ce,#9333ea 50%,#c026d3);
+    background-size: 200% 100%;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 1.6px;
+    cursor: pointer;
+    box-shadow: 0 7px 25px #9333ea30;
+    transition: transform .25s, box-shadow .25s, background-position .5s;
+}
+
+.copy-btn::before {
+    content: "";
+    position: absolute;
+    top: -70%;
+    left: -70%;
+    width: 45%;
+    height: 240%;
+    transform: rotate(25deg);
+    background: #ffffff24;
+    transition: left .6s ease;
+}
+
+.copy-btn:hover::before {
+    left: 130%;
+}
+
+.copy-btn:hover {
+    transform: translateY(-2px);
+    background-position: 100% 0;
+    box-shadow: 0 10px 35px #a855f75c;
+}
+
+.copy-btn:active {
+    transform: scale(.975);
+}
+
+#message {
+    min-height: 18px;
+    margin-top: 11px;
+    text-align: center;
+    color: #d8b4fe;
+    font-size: 11px;
+    transition: opacity .2s;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    margin-top: 17px;
+    padding-top: 18px;
+    border-top: 1px solid #ffffff10;
+    color: #81758f;
+    font-size: 10px;
+    letter-spacing: .5px;
+}
+
+.footer-icon {
+    color: #c084fc;
+}
+
+@media (max-width: 380px) {
+    body { padding: 15px; }
+    .card { padding: 25px 18px 20px; }
+    .flame-box { width: 82px; height: 82px; }
+    .flame { width: 51px; height: 60px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+    }
+}
+</style>
+</head>
+
+<body>
+<div id="particles"></div>
+
+<main class="wrapper">
+    <section class="card">
+
+        <header class="brand">
+            <div class="flame-box">
+                <svg class="flame" viewBox="0 0 64 80"
+                     xmlns="http://www.w3.org/2000/svg"
+                     aria-label="Purple flame logo" role="img">
+                    <defs>
+                        <linearGradient id="fire" x1="0" y1="0"
+                                        x2="1" y2="1">
+                            <stop offset="0%" stop-color="#f0abfc"/>
+                            <stop offset="45%" stop-color="#c084fc"/>
+                            <stop offset="100%" stop-color="#7e22ce"/>
+                        </linearGradient>
+                        <linearGradient id="core" x1="0" y1="0"
+                                        x2="0" y2="1">
+                            <stop offset="0%" stop-color="#fff"/>
+                            <stop offset="100%" stop-color="#d8b4fe"/>
+                        </linearGradient>
+                    </defs>
+                    <path fill="url(#fire)" d="
+                        M35 2
+                        C39 18 57 23 56 43
+                        C57 61 46 75 31 77
+                        C15 79 5 66 7 51
+                        C8 39 17 32 20 20
+                        C27 29 27 36 26 42
+                        C36 32 39 18 35 2Z"/>
+                    <path fill="url(#core)" d="
+                        M35 40
+                        C39 49 46 53 42 63
+                        C39 72 26 73 21 65
+                        C17 57 25 51 28 45
+                        C29 53 33 55 34 58
+                        C38 52 36 46 35 40Z"/>
+                </svg>
+            </div>
+
+            <h1>Teddy Hub</h1>
+            <p class="subtitle">Premium Key System</p>
+        </header>
+
+        <div class="badge">
+            <span class="badge-dot"></span>
+            YOUR KEY IS READY
+        </div>
+
+        <div class="section-label">
+            <span>YOUR ACCESS KEY</span>
+            <span class="secure">✦ SECURE</span>
+        </div>
+
+        <div class="key-box">
+            <div class="key-symbol">♨</div>
+            <div id="key">TeddyHubKeyLaiwowhLapwownneoakLahwowi</div>
+        </div>
+
+        <button class="copy-btn" id="copyBtn" type="button">
+            ✦ &nbsp; COPY KEY &nbsp; ✦
+        </button>
+
+        <p id="message" aria-live="polite"></p>
+
+        <footer class="footer">
+            <span class="footer-icon">✦</span>
+            POWERED BY TEDDY HUB
+            <span class="footer-icon">✦</span>
+        </footer>
+
+    </section>
+</main>
+
+<script>
+const KEY_VALUE =
+    "TeddyHubKeyLaiwowhLapwownneoakLahwowi";
+
+const button = document.getElementById("copyBtn");
+const message = document.getElementById("message");
+
+button.addEventListener("click", async () => {
+    try {
+        if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(KEY_VALUE);
+        } else {
+            const area = document.createElement("textarea");
+            area.value = KEY_VALUE;
+            area.setAttribute("readonly", "");
+            area.style.position = "fixed";
+            area.style.opacity = "0";
+            document.body.appendChild(area);
+            area.select();
+
+            const success = document.execCommand("copy");
+            area.remove();
+
+            if (!success) throw new Error("Copy unavailable");
+        }
+
+        button.textContent = "✓  KEY COPIED SUCCESSFULLY";
+        message.textContent = "Your key is ready to use!";
+
+        setTimeout(() => {
+            button.textContent = "✦   COPY KEY   ✦";
+            message.textContent = "";
+        }, 2400);
+    } catch (error) {
+        message.textContent =
+            "Copy unavailable. Please select the key manually.";
+    }
+});
+
+// Floating purple particles
+const particleArea = document.getElementById("particles");
+
+for (let i = 0; i < 35; i++) {
+    const p = document.createElement("span");
+    p.className = "particle";
+
+    const size = Math.random() * 3 + 1;
+
+    p.style.left = Math.random() * 100 + "%";
+    p.style.width = size + "px";
+    p.style.height = size + "px";
+    p.style.animationDuration = (7 + Math.random() * 12) + "s";
+    p.style.animationDelay = (-Math.random() * 18) + "s";
+    p.style.opacity = (0.2 + Math.random() * 0.6).toString();
+
+    particleArea.appendChild(p);
+}
+</script>
+</body>
+</html>
